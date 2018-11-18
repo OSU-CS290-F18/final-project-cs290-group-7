@@ -1,0 +1,43 @@
+{
+  "name": "static",
+  "version": "1.0.0",
+  "description": "Project 7 Package",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack -p --config webpack/webpack.config.js",
+    "dev-build": "webpack -d --config webpack/webpack.config.js",
+    "watch": "webpack -d --config webpack/webpack.config.js --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OSU-CS290-F18/final-project-cs290-group-7.git"
+  },
+  "author": "Andrew Quach and Stan Lyakhov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OSU-CS290-F18/final-project-cs290-group-7/issues"
+  },
+  "homepage": "https://github.com/OSU-CS290-F18/final-project-cs290-group-7#readme",
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^9.3.1",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^1.0.1",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^2.0.0",
+    "node-sass": "^4.10.0",
+    "postcss-loader": "^3.0.0",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0"
+  }
+}

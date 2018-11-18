@@ -1,0 +1,20 @@
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS post;
+
+CREATE TABLE user (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    uname TEXT UNIQUE NOT NULL,
+    pass TEXT NOT NULL,
+    registered REAL NOT NULL,
+    upvotes INTEGER default 0
+);
+
+CREATE TABLE post (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    genre TEXT NOT NULL,
+    author_id INTEGER NOT NULL,
+    upvotes INTEGER NOT NULL DEFAULT 0,
+    created REAL NOT NULL,
+    FOREIGN KEY (author_id) REFERENCES user (id)
+);

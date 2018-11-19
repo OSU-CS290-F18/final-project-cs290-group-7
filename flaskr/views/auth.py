@@ -1,5 +1,5 @@
 from flaskr.db import get_db
-from flask import Blueprint, request, g, jsonify, flash, current_app
+from flask import Blueprint, request, jsonify, flash
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_refresh_token_required, jwt_required, get_jwt_identity, JWTManager
 from .admin import admin
@@ -23,10 +23,10 @@ def register():
         hashed = generate_password_hash(password)
         db.execute('INSERT INTO user (uname, pass, registered) VALUES (?, ?, julianday("now"))', (username, hashed))
         db.commit()
-        return jsonify(register="success", error="None"), 200
+        return jsonify(register="true", error="None"), 200
 
     flash(error)
-    return jsonify(register="failed", error=error), 401
+    return jsonify(register="false", error=error), 401
 
 @admin.route('/login', methods=('POST',))
 def login():
@@ -47,10 +47,10 @@ def login():
         refresh_token = create_refresh_token(identity=user_data['uname'])
         insert_token(access_token, db)
         insert_token(refresh_token, db)
-        return jsonify(login="success", access_token=access_token, access_expiration=get_expiration(access_token), refresh_expiration=get_expiration(refresh_token), refresh_token=refresh_token), 200
+        return jsonify(login="true", access_token=access_token, access_expiration=get_expiration(access_token), refresh_expiration=get_expiration(refresh_token), refresh_token=refresh_token), 200
 
     flash(error)
-    return jsonify(login="failed", error=error), 401
+    return jsonify(login="false", error=error), 401
 
 @admin.route('/refresh', methods=('POST',))
 @jwt_refresh_token_required

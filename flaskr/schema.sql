@@ -14,10 +14,11 @@ CREATE TABLE post (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
     genre TEXT NOT NULL,
-    author_id INTEGER NOT NULL,
+    author_uname TEXT NOT NULL,
     upvotes INTEGER NOT NULL DEFAULT 0,
     created REAL NOT NULL,
-    FOREIGN KEY (author_id) REFERENCES user (id)
+    music BLOB NOT NULL,
+    FOREIGN KEY (author_uname) REFERENCES user (uname)
 );
 
 CREATE TABLE token (

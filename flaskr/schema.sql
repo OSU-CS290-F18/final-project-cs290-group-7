@@ -25,7 +25,6 @@ CREATE TABLE token (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     jti STRING NOT NULL,
     identity TEXT NOT NULL,
-    type TEXT NOT NULL,
     revoked INTEGER NOT NULL DEFAULT 0,
     expires REAL NOT NULL,
     FOREIGN KEY (identity) REFERENCES user (uname)

@@ -31,8 +31,8 @@ class Header extends Component {
                 >
                 Group 7 Project
                 </Typography>
-                <Button color="inherit">Register</Button>
-                <Button color="inherit">Login</Button>
+                <Button color="inherit" href="/register">Register</Button>
+                <Button color="inherit" href="/login">Login</Button>
             </Toolbar>
             </AppBar>
         </header>

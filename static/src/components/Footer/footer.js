@@ -16,7 +16,7 @@ const styles = {
     },
 }
 
-class Header extends Component {
+class Footer extends Component {
     render() {
         const { classes } = this.props;
 
@@ -29,10 +29,8 @@ class Header extends Component {
                     color="inherit"
                     className = {classes.grow}
                 >
-                Group 7 Project
+                Created by Andrew Quach and Stan Lyakhov for CS 290
                 </Typography>
-                <Button color="inherit">Register</Button>
-                <Button color="inherit">Login</Button>
             </Toolbar>
             </AppBar>
         </header>
@@ -40,8 +38,8 @@ class Header extends Component {
     }
 }
 
-Header.propTypes = {
+Footer.propTypes = {
     classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(Header);
+export default withStyles(styles)(Footer);

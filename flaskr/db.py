@@ -4,7 +4,6 @@ from flask.cli import with_appcontext
 import sqlite3
 import click
 
-
 def get_db():
     if 'db' not in g:
         g.db = sqlite3.connect(

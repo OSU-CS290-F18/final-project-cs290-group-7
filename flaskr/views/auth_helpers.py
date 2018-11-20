@@ -6,11 +6,10 @@ def insert_token(encoded, db):
     decoded = decode_token(encoded)
     jti = decoded['jti']
     identity = decoded['identity']
-    token_type = decoded['type']
     revoked = 0
     expires = datetime.fromtimestamp(decoded['exp'])
 
-    db.execute('INSERT INTO token (jti, identity, type, revoked, expires) VALUES  (?, ?, ?, ?, julianday(?))', (jti, identity, token_type, revoked, expires))
+    db.execute('INSERT INTO token (jti, identity, revoked, expires) VALUES  (?, ?, ?, julianday(?))', (jti, identity, revoked, expires))
     db.commit()
 
 def get_expiration(encoded):

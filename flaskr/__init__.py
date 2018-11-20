@@ -2,6 +2,7 @@ import os
 
 from flask import Flask
 from flask_jwt_extended import JWTManager
+from datetime import timedelta
 from .views import admin
 from . import db
 
@@ -13,7 +14,8 @@ def create_app(test_config=None):
         DATABASE = os.path.join(app.instance_path, 'flaskr.sqlite'),
         JWT_SECRET_KEY = 'super-secret',
         JWT_BLACKLIST_ENABLED = True,
-        JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
+        JWT_BLACKLIST_TOKEN_CHECKS = ['access'],
+        JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
     )
     if test_config:
         app.config.from_mapping(test_config)

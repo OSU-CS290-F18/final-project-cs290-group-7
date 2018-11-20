@@ -1,4 +1,4 @@
-import { browserHistory } from "react-router";
+import { history } from "../store/configureStore";
 
 import {
     LOGIN_SUCCESS,
@@ -85,7 +85,7 @@ export function register(username, password) {
             .then(json => json.data)
             .then((response) => {
                 dispatch(registerSuccess());
-                browserHistory.push('/login');
+                history.push('/login');
             })
             .catch((error) => {
                 if (error.response) {

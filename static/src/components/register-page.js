@@ -46,6 +46,10 @@ const styles = theme => ({
         margin: theme.spacing.unit,
         width: "30%",
         height: theme.spacing.unit * 7,
+
+        '&:disabled': {
+            background: fade(theme.palette.common.white, 0.30),
+        }
     },
     error: {
         color: "red",
@@ -54,7 +58,7 @@ const styles = theme => ({
 }); 
 
 function mapStateToProps(state) {
-    return {registrationStatus: state.authentication.registrationStatus};
+    return {status: state.authentication.status};
 }
 
 function mapDispatchToProps(dispatch) {
@@ -117,7 +121,7 @@ class RegisterPage extends Component {
                     color="inherit"
                     className={classes.title}
                 >
-                {this.props.registrationStatus}
+                {this.props.status}
                 </Typography>
                 <Typography
                     variant="h2"

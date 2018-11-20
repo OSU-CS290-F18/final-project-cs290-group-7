@@ -17,22 +17,23 @@ const initialState = {
     isAuthenticating: false,
     isRegistering: false,
     isRegistered: false,
-    registrationStatus: null,
+    status: null,
 }
 
 export default createReducer(initialState, {
     [REGISTER_REQUEST]: (state) =>
         Object.assign({}, state, {
             isRegistering: true,
+            status: null,
         }),
     [REGISTER_SUCCESS]: (state) =>
         Object.assign({}, state, {
             isRegistering: false,
-            registrationStatus: `Success: Account created.`,
+            status: `Success: Account created. Please login.`,
         }),
     [REGISTER_FAILURE]: (state, payload) =>
         Object.assign({}, state, {
             isRegistering: false,
-            registrationStatus: `Error: ${payload.error}`,
+            status: `Error: ${payload.error}`,
         }),
 });

@@ -12,6 +12,7 @@ import {
 
 const initialState = {
     token: null,
+    tokenExpiration: null,
     username: null,
     isAuthenticated: false,
     isAuthenticating: false,
@@ -34,6 +35,26 @@ export default createReducer(initialState, {
     [REGISTER_FAILURE]: (state, payload) =>
         Object.assign({}, state, {
             isRegistering: false,
+            status: `Error: ${payload.error}`,
+        }),
+    [LOGIN_REQUEST]: (state) =>
+        Object.assign({}, state, {
+            isAuthenticating: true,
+            status: null,
+        }),
+    [LOGIN_SUCCESS]: (state, payload) =>
+        Object.assign({}, state, {
+            token: payload.token,
+            tokenExpiration: payload.tokenExpiration,
+            isAuthenticating: false,
+            isAuthenticated: true,
+            status: null,
+        }),
+    [LOGIN_FAILURE]: (state, payload) =>
+        Object.assign({}, state, {
+            isAuthenticating: false,
+            token: null,
+            tokenExpiration: null,
             status: `Error: ${payload.error}`,
         }),
 });

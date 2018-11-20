@@ -12,36 +12,27 @@ import {
 
 import { registerAPI, loginAPI } from "../utils/auth-api";
 
-export function loginSuccess(token) {
-    localStorage.setItem("token", token);
+export function loginSuccess(payload) {
     return {
         type: LOGIN_SUCCESS,
-        payload: {
-            token,
-        }
+        payload: payload,
     }
 }
 
-export function loginFailure(token) {
-    localStorage.removeItem("token");
+export function loginFailure(payload) {
     return {
         type: LOGIN_FAILURE,
-        payload: {
-            statuscode: error.response.statuscode,
-            msg: error.response.msg,
-        }
+        payload: payload,
     }
 }
 
 export function loginRequest() {
-    localStorage.removeItem("token");
     return {
         type: LOGIN_REQUEST,
     }
 }
 
 export function logoutRequest() {
-    localStorage.removeItem("token");
     return {
         type: LOGOUT_REQUEST,
     }
@@ -54,8 +45,17 @@ export function login(username, password) {
         return loginAPI(username, password)
             .then(json => json.data)
             .then((response) => {
-                console.log(response);
+                dispatch(loginSuccess({
+                    token: response.access_token,
+                    tokenExpiration: response.access_expiration,
+                }));
+                history.push('/');
             })
+            .catch((error) => {
+                if (error.response) {
+                    dispatch(loginFailure(error.response.data));
+                }
+            });
     };
 }
 

@@ -14,8 +14,7 @@ export function registerAPI(username, password) {
 }
 
 export function loginAPI(username, password) {
-    return axios.post("/login", {
-        username,
-        password,
-    });
+    return axios.post("/login",
+        qs.stringify({username: username, password: password})
+    );
 }

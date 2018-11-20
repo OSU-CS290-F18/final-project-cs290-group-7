@@ -18,3 +18,7 @@ export function loginAPI(username, password) {
         qs.stringify({username: username, password: password})
     );
 }
+
+export function logoutAPI(token) {
+    return axios.delete("/logout", authHeader(token));
+}

@@ -5,6 +5,7 @@ import {
     LOGIN_FAILURE,
     LOGIN_REQUEST,
     LOGOUT_REQUEST,
+    LOGOUT_COMPLETE,
     REGISTER_SUCCESS,
     REGISTER_FAILURE,
     REGISTER_REQUEST,
@@ -18,6 +19,7 @@ const initialState = {
     isAuthenticating: false,
     isRegistering: false,
     isRegistered: false,
+    isLoggingOut: false,
     status: null,
 }
 
@@ -58,5 +60,19 @@ export default createReducer(initialState, {
             token: null,
             tokenExpiration: null,
             status: `Error: ${payload.error}`,
+        }),
+    [LOGOUT_REQUEST]: (state) =>
+        Object.assign({}, state, {
+            isLoggingOut: true,
+            status: null,
+        }),
+    [LOGOUT_COMPLETE]: (state) =>
+        Object.assign({}, state, {
+            isLoggingOut: false,
+            token: null,
+            tokenExpiration: null,
+            isAuthenticated: false,
+            username: null,
+            status: `Successfully logged out.`,
         }),
 });

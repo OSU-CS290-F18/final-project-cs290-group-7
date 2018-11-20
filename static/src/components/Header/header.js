@@ -24,6 +24,7 @@ function mapStateToProps(state) {
     return {
         isAuthenticated: state.authentication.isAuthenticated,
         username: state.authentication.username,
+        token: state.authentication.token,
     };
 }
 
@@ -33,6 +34,11 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 class Header extends Component {
+    logout(e, token) {
+        e.preventDefault();
+        this.props.logout(token);
+    }
+
     render() {
         const { classes } = this.props;
 
@@ -42,7 +48,7 @@ class Header extends Component {
             rightNav =
                 <div>
                     <Button color="inherit">{this.props.username} User Page</Button>
-                    <Button color="inherit">Logout</Button>
+                    <Button color="inherit" onClick={(e) => this.logout(e, this.props.token)}>Logout</Button>
                 </div>
         } else {
             rightNav = 

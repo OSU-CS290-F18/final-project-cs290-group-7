@@ -5,12 +5,13 @@ import {
     LOGIN_FAILURE,
     LOGIN_REQUEST,
     LOGOUT_REQUEST,
+    LOGOUT_COMPLETE,
     REGISTER_SUCCESS,
     REGISTER_FAILURE,
     REGISTER_REQUEST,
 } from "../constants/index";
 
-import { registerAPI, loginAPI } from "../utils/auth-api";
+import { registerAPI, loginAPI, logoutAPI } from "../utils/auth-api";
 
 export function loginSuccess(payload) {
     return {
@@ -36,7 +37,12 @@ export function logoutRequest() {
     return {
         type: LOGOUT_REQUEST,
     }
+}
 
+export function logoutComplete() {
+    return {
+        type: LOGOUT_COMPLETE,
+    }
 }
 
 export function login(username, password) {
@@ -56,6 +62,21 @@ export function login(username, password) {
                 if (error.response) {
                     dispatch(loginFailure(error.response.data));
                 }
+            });
+    };
+}
+
+export function logout(token) {
+    return function(dispatch) {
+        dispatch(logoutRequest());
+        return logoutAPI(token)
+            .then((response) => {
+                dispatch(logoutComplete());
+                history.push("/login");
+            })
+            .catch((error) => {
+                dispatch(logoutComplete());
+                history.push("/login");
             });
     };
 }

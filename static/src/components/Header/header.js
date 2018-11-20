@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -6,6 +8,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
+
+import * as actionCreators from "../../actions/authentication";
 
 const styles = {
     root: {
@@ -16,9 +20,38 @@ const styles = {
     },
 }
 
+function mapStateToProps(state) {
+    return {
+        isAuthenticated: state.authentication.isAuthenticated,
+        username: state.authentication.username,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actionCreators, dispatch);
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
 class Header extends Component {
     render() {
         const { classes } = this.props;
+
+        let rightNav;
+        if (this.props.isAuthenticated && this.props.username) {
+            console.log(this.props.isAuthenticated);
+            rightNav =
+                <div>
+                    <Button color="inherit">{this.props.username} User Page</Button>
+                    <Button color="inherit">Logout</Button>
+                </div>
+        } else {
+            rightNav = 
+                <div>
+                    <Button color="inherit" href="/register">Register</Button>
+                    <Button color="inherit" href="/login">Login</Button>
+                </div>;
+
+        }
 
         return (
         <header className = {classes.root}>
@@ -31,8 +64,7 @@ class Header extends Component {
                 >
                 Group 7 Project
                 </Typography>
-                <Button color="inherit" href="/register">Register</Button>
-                <Button color="inherit" href="/login">Login</Button>
+                {rightNav}
             </Toolbar>
             </AppBar>
         </header>

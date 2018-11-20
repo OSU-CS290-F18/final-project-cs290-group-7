@@ -46,6 +46,7 @@ export default createReducer(initialState, {
         Object.assign({}, state, {
             token: payload.token,
             tokenExpiration: payload.tokenExpiration,
+            username: payload.username,
             isAuthenticating: false,
             isAuthenticated: true,
             status: null,
@@ -53,6 +54,7 @@ export default createReducer(initialState, {
     [LOGIN_FAILURE]: (state, payload) =>
         Object.assign({}, state, {
             isAuthenticating: false,
+            username: null,
             token: null,
             tokenExpiration: null,
             status: `Error: ${payload.error}`,

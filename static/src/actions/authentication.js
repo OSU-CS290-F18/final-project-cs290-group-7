@@ -48,6 +48,7 @@ export function login(username, password) {
                 dispatch(loginSuccess({
                     token: response.access_token,
                     tokenExpiration: response.access_expiration,
+                    username: username,
                 }));
                 history.push('/');
             })

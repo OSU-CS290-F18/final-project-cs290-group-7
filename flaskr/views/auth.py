@@ -18,6 +18,8 @@ def register():
         error = "Password not found"
     elif db.execute('SELECT id FROM user WHERE uname = ?', (username,)).fetchone():
         error = f"Username {username} is already taken"
+    elif len(password) < 8:
+        error = "Password does not meet length requirement"
 
     if not error:
         hashed = generate_password_hash(password, method="pbkdf2:sha512")
@@ -37,11 +39,8 @@ def login():
 
     user_data = db.execute('SELECT uname, pass FROM user WHERE uname = ?', (username,)).fetchone()
 
-    if not user_data:
-        error = "User not found"
-    elif not check_password_hash(user_data['pass'], password):
-        error = "Incorrect password"
-    
+    if not (user_data and check_password_hash(user_data['pass'], password)):
+        error = "Username or password incorrect"
     if not error:
         access_token = create_access_token(identity=user_data['uname'])
         insert_token(access_token, db)

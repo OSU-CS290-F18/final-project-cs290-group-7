@@ -18,4 +18,3 @@ def get_expiration(encoded):
 def revoke_tokens(identity, db):
     db.execute("UPDATE token SET revoked=1 WHERE identity = ?", (identity,))
     db.commit()
-

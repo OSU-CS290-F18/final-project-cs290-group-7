@@ -56,3 +56,8 @@ def logout():
     identity = get_jwt_identity()
     revoke_tokens(identity, db)
     return jsonify(tokens="revoked"), 200
+
+@admin.route('/verify_token', methods=('POST',))
+@jwt_required
+def verify():
+    return jsonify(msg="Token valid"), 200

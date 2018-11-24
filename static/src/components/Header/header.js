@@ -44,7 +44,6 @@ class Header extends Component {
 
         let rightNav;
         if (this.props.isAuthenticated && this.props.username) {
-            console.log(this.props.isAuthenticated);
             rightNav =
                 <div>
                     <Button color="inherit">{this.props.username} User Page</Button>

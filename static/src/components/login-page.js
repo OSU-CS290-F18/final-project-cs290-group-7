@@ -73,6 +73,7 @@ class LoginPage extends Component {
             username: "",
             password: "",
             isFilled: false,
+            error: null,
         };
     }
 

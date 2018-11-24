@@ -17,7 +17,7 @@ CREATE TABLE post (
     author_uname TEXT NOT NULL,
     upvotes INTEGER NOT NULL DEFAULT 0,
     created REAL NOT NULL,
-    music BLOB NOT NULL,
+    music TEXT NOT NULL,
     FOREIGN KEY (author_uname) REFERENCES user (uname)
 );
 

@@ -12,6 +12,8 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY = 'devkey',
         DATABASE = os.path.join(app.instance_path, 'flaskr.sqlite'),
+        UPLOAD_FOLDER = os.path.join(app.instance_path, "uploads/"),
+        MAX_CONTENT_LENGTH = 16 * 1024 * 1024,
         JWT_SECRET_KEY = 'super-secret',
         JWT_BLACKLIST_ENABLED = True,
         JWT_BLACKLIST_TOKEN_CHECKS = ['access'],
@@ -23,7 +25,7 @@ def create_app(test_config=None):
         app.config.from_pyfile('config.py', silent=True)
 
     try:
-        os.makedirs(app.instance_path)
+        os.makedirs(os.path.join(app.config['UPLOAD_FOLDER']))
     except OSError:
         pass
 

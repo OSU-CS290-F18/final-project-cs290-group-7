@@ -7,4 +7,5 @@ MarkupSafe==1.1.0
 pkg-resources==0.0.0
 PyJWT==1.4.2
 python-dotenv==0.9.1
+python-magic==0.4.15
 Werkzeug==0.14.1

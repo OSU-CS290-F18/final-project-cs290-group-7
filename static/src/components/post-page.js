@@ -85,6 +85,7 @@ const styles = theme => ({
 });
 
 const genres = [
+    'None',
     'Rock',
     'Country',
     'Metal',
@@ -96,10 +97,13 @@ class PostPage extends Component {
         this.state = {
             listAnchor: null,
             listIndex: 0,
+            title: null,
+            file: null,
+            isFilled: false,
         };
     }
 
-    clickedList(e) {
+    clickList(e) {
         this.setState({listAnchor: e.currentTarget});
     }
 
@@ -107,8 +111,43 @@ class PostPage extends Component {
         this.setState({listAnchor: null});
     }
 
-    clickedMenu(e, index) {
-        this.setState({listIndex: index, listAnchor: null}); 
+    clickMenu(e, index) {
+        this.setState({listIndex: index, listAnchor: null}, () => {
+            this.isFilled();
+        }); 
+    }
+
+    uploadFile(file) {
+        this.setState({file: file}, () => {
+            this.isFilled();
+        });
+    }
+
+    update(e, field) {
+        const nextState = {};
+        nextState[field] = e.target.value;
+        this.setState(nextState, () => {
+            this.isFilled(); 
+        });
+    }
+
+    isFilled() {
+        let valid = false;
+
+        if (this.state.title === "" || !this.state.title) {
+            this.setState({error: "Please enter a title."});
+        } else if (this.state.title.length > 100) {
+            this.setState({error: "Title is too long (100 char max)."});
+        } else if (genres[this.state.listIndex] === "None") {
+            this.setState({error: "Please select a genre."});
+        } else if (!this.state.file) {
+            this.setState({error: "Please upload a file."});
+        } else {
+            this.setState({error: null});
+            valid = true;
+        }
+
+        this.setState({isFilled: valid});
     }
 
     render() {
@@ -133,6 +172,8 @@ class PostPage extends Component {
                         color="inherit"
                         placeholder="Title of song..."
                         className={classes.input}
+                        maxLength="2"
+                        onChange={(e) => this.update(e, "title")}
                     />
                 </div>
                 <div className={classes.buttonDiv}>
@@ -142,9 +183,9 @@ class PostPage extends Component {
                             aria-haspopup="true"
                             aria-controls="lock-menu"
                             aria-label="Genre"
-                            onClick={(e) => this.clickedList(e)}
+                            onClick={(e) => this.clickList(e)}
                             className={classes.genre}
-                        >
+                       >
                             <ListItemText
                                 disableTypography
                                 primary={<Typography 
@@ -167,17 +208,17 @@ class PostPage extends Component {
                         anchorEl={this.state.listAnchor}
                         open={Boolean(this.state.listAnchor)}
                         onClose={(e) => this.closeMenu()}
+                        getContentAnchorEl={null}
                         anchorOrigin={{
-                            vertical: "bottom",
+                            vertical: "center",
                             horizontal: "center"
                         }}
                     >
-
                         {genres.map((genre, index) => (
                             <MenuItem
                                 key={genre}
                                 selected={index === this.state.listIndex}
-                                onClick={(e) => this.clickedMenu(e, index)}
+                                onClick={(e) => this.clickMenu(e, index)}
                             >
                                 {genre}
                             </MenuItem>
@@ -188,6 +229,7 @@ class PostPage extends Component {
                         className={classes.fileInput}
                         id="upload-button"
                         type="file"
+                        onChange={(e) => this.uploadFile(e.target.files[0])}
                     />
                     <label htmlFor="upload-button">
                         <Button variant="contained" component="span" color="secondary" className={classes.button}>
@@ -196,7 +238,11 @@ class PostPage extends Component {
                     </label>
                 </div>
                 <div className={classes.buttonDiv}>
-                    <Button variant="contained" color="primary" className={classes.button}>
+                    <Button 
+                        disabled={!this.state.isFilled}
+                        variant="contained" 
+                        color="primary" 
+                        className={classes.button}>
                         Submit
                     </Button>
                 </div>

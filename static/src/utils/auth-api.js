@@ -1,11 +1,11 @@
 import axios from "axios";
 import qs from "qs";
 
-const authHeader = (token) => ({
-    headers: {
+export function authHeader(token) {
+    return {headers: {
         "Authorization": "Bearer " + token,
-    }
-});
+    }};
+}
 
 export function registerAPI(username, password) {
     return axios.post("/register",

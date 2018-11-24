@@ -19,6 +19,8 @@ import Menu from "@material-ui/core/Menu";
 import Header from "./Header/header";
 import Footer from "./Footer/footer";
 
+import * as actionCreators from "../actions/post";
+
 const styles = theme => ({
     body: {
         marginTop: theme.spacing.unit * 2,
@@ -62,6 +64,7 @@ const styles = theme => ({
         background: theme.palette.secondary.main,
         textCAlign: "center",
         borderRadius: theme.shape.borderRadius,
+
         '&:hover': {
             backgroundColor: fade(theme.palette.secondary.dark, 1.0),
         },
@@ -78,11 +81,24 @@ const styles = theme => ({
         display: "inline-block",
         margin: theme.spacing.unit,
         width: "40%",
+
+        '&:disabled': {
+            background: fade(theme.palette.common.white, 0.30),
+        }
     },
     fileInput: {
         display: "none",
     }
 });
+
+function mapStateToProps(state) {
+    return {status: state.post.status,
+            token: state.authentication.token};
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actionCreators, dispatch);
+}
 
 const genres = [
     'None',
@@ -91,6 +107,7 @@ const genres = [
     'Metal',
 ]
 
+@connect(mapStateToProps, mapDispatchToProps)
 class PostPage extends Component {
     constructor(props) {
         super(props);
@@ -150,6 +167,13 @@ class PostPage extends Component {
         this.setState({isFilled: valid});
     }
 
+    post(e) {
+        e.preventDefault();
+        this.props.post(this.props.token, 
+                        this.state.title, 
+                        genres[this.state.listIndex], this.state.file);
+    }
+
     render() {
         const { classes } = this.props;
 
@@ -157,6 +181,13 @@ class PostPage extends Component {
         <div>
             <Header /> 
             <Paper elevation={1} className={classes.body}>
+                <Typography
+                    variant="h6"
+                    color="inherit"
+                    className={classes.title}
+                >
+                {this.props.status}
+                </Typography>
                 <Typography
                     variant="h2"
                     color="inherit"
@@ -229,6 +260,7 @@ class PostPage extends Component {
                         className={classes.fileInput}
                         id="upload-button"
                         type="file"
+                        enctype="multipart/form-data"
                         onChange={(e) => this.uploadFile(e.target.files[0])}
                     />
                     <label htmlFor="upload-button">
@@ -242,6 +274,7 @@ class PostPage extends Component {
                         disabled={!this.state.isFilled}
                         variant="contained" 
                         color="primary" 
+                        onClick={(e) => this.post(e)}
                         className={classes.button}>
                         Submit
                     </Button>
@@ -251,6 +284,10 @@ class PostPage extends Component {
         </div>
         );
     }
+}
+
+PostPage.propTypes = {
+    post: PropTypes.func,
 }
 
 export default withStyles(styles)(PostPage);

@@ -10,24 +10,23 @@ from .admin import admin
 def upload():
     db = get_db()
     identity = get_jwt_identity()
-    title = request.form['title']
-    genre = request.form['genre']
-    music = request.files['music']
-    music_stream = music.read()
-    filename = sha256(music_stream).hexdigest()
     error = None
-
-    if not title:
+    if form_exists(request.form, 'title'):
+        title = request.form['title']
+    else:
         error = "Missing title"
-    elif not genre:
+    if form_exists(request.form, 'genre') and error is None:
+        genre = request.form['genre']
+    else:
         error = "Missing genre"
-    elif not music_stream or music.filename == "":
+    if form_exists(request.files, 'music') and error is None:
+        music = request.files['music']
+        music_stream = music.read()
+        filename = sha256(music_stream).hexdigest()
+        error = check_music_integrity(music, music_stream, filename)
+    else:
         error = "Missing mp3 file upload"
-    elif not verify_music(music, music_stream):
-        error = "Invalid mp3 file"
-    elif db.execute('SELECT music FROM post WHERE music = ?', (filename,)).fetchone() is not None:
-        error = "Could not upload duplicate files"
-    
+
     if error is None:
         write_file(music_stream, filename)
         db.execute('INSERT INTO post (title, genre, author_uname, created, music) VALUES (?, ?, ?, julianday("now"), ?)', (title, genre, identity, filename))
@@ -38,32 +37,7 @@ def upload():
 @admin.route('/posts', methods=('POST',))
 def front():
     db = get_db()
-    title = request.form['title']
-    genre = request.form['genre']
-    limit = request.form['limit']
-    query = 'SELECT * FROM post'
-    params = []
-
-    if title:
-        params.append(title)
-        query += ' WHERE title = ?'
-    if genre:
-        params.append(genre)
-        if title:
-            query += ' AND genre = ?'
-        else:
-            query += ' WHERE genre = ?'
-    if limit:
-        try:
-            int(limit)
-        except ValueError:
-            limit = "20"
-    else:
-        limit = "20"
-    params.append(limit)
-    query += ' LIMIT ?'
-
-    params = tuple(params)
+    query, params = get_posts_query(request.form)
     posts = db.execute(query, params).fetchall()
     return jsonify(posts=[dict(post) for post in posts]), 200
 

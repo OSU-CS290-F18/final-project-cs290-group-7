@@ -1,4 +1,5 @@
-from flask import current_app, send_from_directory, current_app
+from flaskr.db import get_db
+from flask import current_app, send_from_directory
 import magic
 import os
 
@@ -18,3 +19,49 @@ def write_file(stream, filename):
 
 def send_music(filename):
         return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename, as_attachment=True, mimetype="audio/mpeg")
+
+def get_posts_query(forms):
+    query = 'SELECT * FROM post'
+    params = []
+
+    if form_exists(forms, 'title'):
+        params.append("%" + forms['title'] + "%")
+        query += ' WHERE title LIKE ?'
+    if form_exists(forms, 'author'):
+        params.append(forms['author'])
+        if form_exists(forms, 'title'):
+            query += ' AND author_uname = ?'
+        else:
+            query += ' WHERE author_uname = ?'
+    if form_exists(forms, 'genre'):
+        params.append(forms['genre'])
+        if form_exists(forms, 'title') or form_exists(forms, 'author'):
+            query += ' AND genre = ?'
+        else:
+            query += ' WHERE genre = ?'
+    if form_exists(forms, 'limit'):
+        try:
+            int(forms['limit'])
+            limit = forms['limit']
+        except ValueError:
+            limit = "20"
+    else:
+        limit = "20"
+    params.append(limit)
+    query += ' LIMIT ?'
+    return query, tuple(params)
+
+def form_exists(forms, keyword):
+    return keyword in forms and forms[keyword]
+
+def check_music_integrity(music, music_stream, filename):
+    db = get_db()
+    error = None
+    if not music_stream or music.filename == "":
+        error = "Missing mp3 file upload"
+    elif not verify_music(music, music_stream):
+        error = "Invalid mp3 file"
+    elif db.execute('SELECT music FROM post WHERE music = ?', (filename,)).fetchone() is not None:
+        error = "Could not upload duplicate files"
+
+    return error

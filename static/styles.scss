@@ -1,0 +1,20 @@
+.react-h5-audio-player {
+    .flex {
+        border-radius: 4px;
+    }
+    .toggle-play-wrapper {
+        .toggle-play-button {
+            background-color: #3f51b5 !important;
+            .pause-icon {
+                box-shadow: #3f51b5 7px 0px 0px 0px inset !important;
+            }
+        }
+    }
+    .progress-bar-wrapper {
+        .audio-info {
+            .time {
+                font-family: "Roboto";
+            }
+        }
+    }
+}

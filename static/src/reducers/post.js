@@ -9,7 +9,7 @@ import {
 const initialState = {
     isPosting: false,
     status: null,
-}
+};
 
 export default createReducer(initialState, {
     [POST_REQUEST]: (state) =>

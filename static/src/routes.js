@@ -5,6 +5,7 @@ import FrontPage from "./components/front-page";
 import LoginPage from "./components/login-page";
 import RegisterPage from "./components/register-page";
 import PostPage from "./components/post-page";
+import ResultPage from "./components/result-page";
 
 const routes = (
     <div>
@@ -12,7 +13,8 @@ const routes = (
         <Route exact path="/register" component={RegisterPage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/post" component={PostPage} />
+        <Route exact path="/g/:genre" component={ResultPage} />
     </div>
-)
+);
 
 export default routes;

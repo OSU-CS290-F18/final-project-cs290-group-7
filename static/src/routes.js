@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router";
+import { Route, Switch, Redirect } from "react-router";
 
 import FrontPage from "./components/front-page";
 import LoginPage from "./components/login-page";
@@ -16,6 +16,7 @@ const routes = (
         <Route exact path="/post" component={PostPage} />
         <Route exact path="/g/:genre" component={ResultPage} />
         <Route exact path="/u/:user" component={ResultPage} />
+        <Route exact path="/s/" render={() => <Redirect to="/g/all" />} />
         <Route exact path="/s/:search" component={ResultPage} />
         <Route path="*" exact={true} component={ErrorPage} />
     </Switch>

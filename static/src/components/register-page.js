@@ -78,6 +78,12 @@ class RegisterPage extends Component {
         };
     }
 
+    _handleKeyPress(e) {
+        if (e.key === 'Enter' && this.state.isFilled) {
+            this.props.register(this.state.username, this.state.password);
+        }
+    }
+
     update(e, field) {
         const nextState = {};
         nextState[field] = e.target.value;
@@ -113,7 +119,7 @@ class RegisterPage extends Component {
     render() {
         const { classes } = this.props;
         return (
-        <div>
+        <div onKeyPress={(e) => this._handleKeyPress(e)}>
             <Header /> 
             <Paper elevation={1} className={classes.body}>
                 <Typography

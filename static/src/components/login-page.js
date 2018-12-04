@@ -77,6 +77,12 @@ class LoginPage extends Component {
         };
     }
 
+    _handleKeyPress(e) {
+        if (e.key === 'Enter' && this.state.isFilled) {
+            this.props.login(this.state.username, this.state.password);
+        }
+    }
+
     update(e, field) {
         const nextState = {};
         nextState[field] = e.target.value;
@@ -108,7 +114,7 @@ class LoginPage extends Component {
     render() {
         const { classes } = this.props;
         return (
-        <div>
+        <div onKeyPress={(e) => this._handleKeyPress(e)}>
             <Header /> 
             <Paper elevation={1} className={classes.body}>
                 <Typography

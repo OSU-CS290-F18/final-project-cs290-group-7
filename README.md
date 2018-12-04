@@ -1,6 +1,6 @@
 ![Mixolydian](static/logo.png?raw=true)
 
-**Version** 1.0
+**Version** 1.1
 
 **Authors**: Andrew Quach and Stan Lyakhov
 

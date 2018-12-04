@@ -69,6 +69,12 @@ class FrontPage extends Component {
         };
     }
 
+    _handleKeyPress(e) {
+        if (e.key === 'Enter') {
+            history.push(`/s/${this.state.search}`);
+        }
+    }
+
     search(e) {
         history.push(`/s/${this.state.search}`);
     }
@@ -91,7 +97,7 @@ class FrontPage extends Component {
             <Header /> 
             <Paper elevation={1} className={classes.body}>
                 <img className={classes.img} src="/logo.png" />
-                <div className={classes.search}>
+                <div className={classes.search} onKeyPress={(e) => this._handleKeyPress(e)}>
                     <div className={classes.iconDiv}>
                         <SearchIcon className={classes.icon}/>
                     </div>

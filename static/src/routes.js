@@ -14,6 +14,8 @@ const routes = (
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/post" component={PostPage} />
         <Route exact path="/g/:genre" component={ResultPage} />
+        <Route exact path="/u/:user" component={ResultPage} />
+        <Route exact path="/s/:search" component={ResultPage} />
     </div>
 );
 

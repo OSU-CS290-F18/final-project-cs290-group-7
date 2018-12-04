@@ -86,6 +86,8 @@ class ResultPage extends Component {
                 {this.props.posts.map((post) => (
                     <AudioPost 
                         title={post.title}
+                        genre={post.genre}
+                        author={post.author_uname}
                         src={`/posts/${post.music}`}
                     />
                 ))}

@@ -7,7 +7,7 @@
 CS290 Web Development Final Project
 
 ## Introduction
-Mixolydian is a reddit-inspired website that allows musicians, both hobbyists and professionals, to upload and share their original music with the world. Mixolydian is designed as both a self-promotion platform, as well as a place for users to discover new music of different genres.
+Mixolydian is a reddit-inspired website that allows musicians, both hobbyists and professionals, to upload and share their original music with the world. Mixolydian is designed as both a self-promotion platform and a place for users to discover new music of different genres.
 
 Myxolidian operates on a `Flask` backend and a `React` based frontend.
 ## Planned Features

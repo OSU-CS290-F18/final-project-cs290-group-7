@@ -102,9 +102,14 @@ function mapDispatchToProps(dispatch) {
 
 const genres = [
     'None',
-    'Rock',
+    'Blues',
+    'Classical',
     'Country',
+    'Rock',
+    'Jazz',
     'Metal',
+    'Pop',
+    'Electronic',
 ]
 
 @connect(mapStateToProps, mapDispatchToProps)

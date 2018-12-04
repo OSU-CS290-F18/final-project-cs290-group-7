@@ -33,7 +33,6 @@ export function post(token, title, genre, music) {
         return postAPI(token, title, genre, music)
             .then(json => json.data)   
             .then((response) => {
-                console.log(response);
                 dispatch(postSuccess());
                 history.push('/');
             })

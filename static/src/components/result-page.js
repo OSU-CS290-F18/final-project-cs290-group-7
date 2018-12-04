@@ -16,12 +16,14 @@ import AudioPost from "./AudioPost/audio-post";
 
 import "../../styles.scss";
 
+import * as actionCreators from "../actions/get";
+
 const styles = theme => ({
     body: {
         marginTop: theme.spacing.unit * 2,
         marginBottom: theme.spacing.unit * 2,
-        paddingTop: "15vh",
-        paddingBottom: "15vh",
+        paddingTop: "2vh",
+        paddingBottom: "2vh",
         backgroundColor: fade(theme.palette.common.black, 0.80),
     },
     title: {
@@ -31,29 +33,54 @@ const styles = theme => ({
     },
 });
 
+function mapStateToProps(state) {
+    return {
+        posts: state.get.posts,
+        status: state.get.status,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actionCreators, dispatch);
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
 class ResultPage extends Component {
+    componentDidMount() {
+       this.props.get('', '', this.props.match.params.genre, '50');
+    }
+
+    
+
     render() {
+        let allPosts = null;
+        if (this.props.posts) {
+            allPosts = <div>
+                {this.props.posts.map((post) => (
+                    <AudioPost 
+                        title={post.title}
+                        src={`/posts/${post.music}`}
+                    />
+                ))}
+                </div>;
+        } else {
+            allPosts = null;
+        }
+
         const { classes } = this.props;
+        console.log(this.props.posts);
         return (
         <div>
             <Header />
             <Paper elevation={1} className={classes.body}>
                 <Typography
-                    variant="h6"
+                    variant="h2"
                     color="inherit"
                     className={classes.title}
                 >
                 {this.props.match.params.genre}
                 </Typography>
-                <AudioPost 
-                    title="HELLO WORLD"
-                    src="/posts/788b69b116105a849c2376fd5fb6c26a916fb9b810998d8ea8db4a0963eb6283"
-                />
-                <AudioPost 
-                    title="HELLO WORLD"
-                    src="/posts/788b69b116105a849c2376fd5fb6c26a916fb9b810998d8ea8db4a0963eb6283"
-                />
-            
+                {allPosts}
             </Paper>
             <Footer />
         </div>

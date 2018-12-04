@@ -46,15 +46,28 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 class ResultPage extends Component {
-    componentDidMount() {
-        let genre = this.props.match.params.genre || '' ;
+    getPosts() {
+        let genre = this.props.match.params.genre || '';
+        let user = this.props.match.params.user || '';
+        let title = this.props.match.params.search || '';
+
         if (genre.toLowerCase() === 'all') {
             genre = '';
         }
 
-        let user = this.props.match.params.user || '' ;
-        let title = this.props.match.params.search || '' ;
         this.props.get(user, title, genre, '50');
+    }
+
+    componentDidMount() {
+        this.getPosts();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.genre !== prevProps.match.params.genre ||
+            this.props.match.params.user !== prevProps.match.params.user ||
+            this.props.match.params.search !== prevProps.match.params.search) {
+            this.getPosts();
+        }
     }
 
     render() {
@@ -73,6 +86,8 @@ class ResultPage extends Component {
                 {this.props.posts.map((post) => (
                     <AudioPost 
                         title={post.title}
+                        genre={post.genre}
+                        author={post.author_uname}
                         src={`/posts/${post.music}`}
                     />
                 ))}

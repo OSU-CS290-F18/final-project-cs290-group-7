@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import { history } from "../../store/configureStore";
 import PropTypes from "prop-types";
 
 import { withStyles } from '@material-ui/core/styles';
 import { fade } from "@material-ui/core/styles/colorManipulator";
+import ButtonBase from "@material-ui/core/ButtonBase";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -29,13 +31,32 @@ const styles = theme => ({
             background: theme.palette.primary.main,
         }
     },
+    arrow: {
+        color: "white",
+    },
     postTitleBox: {
         margin: theme.spacing.unit,
         color: "black",
         width: "100%",
         display: "flex",
     },
-    postTitle: {
+    postAuthorBox: {
+        background: theme.palette.primary.main,
+        margin: theme.spacing.unit,
+        color: "white",
+        width: "100%",
+        height: "100%",
+        display: "flex",
+    },
+    postGenreBox: {
+        background: theme.palette.primary.main,
+        margin: theme.spacing.unit,
+        color: "white",
+        width: "100%",
+        height: "100%",
+        display: "flex",
+    },
+    postTagBody: {
         textAlign: "center",
         margin: "auto",
         marginLeft: theme.spacing.unit*2,
@@ -44,7 +65,19 @@ const styles = theme => ({
         marginLeft: theme.spacing.unit*2,
         marginRight: theme.spacing.unit*2,
         marginBottom: theme.spacing.unit*2,
-    }
+    },
+    btnGenreBase: {
+        borderRadius: theme.shape.borderRadius,
+        paddingTop: theme.spacing.unit,
+        paddingBottom: theme.spacing.unit,
+        width: "20%",
+    },
+    btnAuthorBase: {
+        borderRadius: theme.shape.borderRadius,
+        paddingTop: theme.spacing.unit,
+        paddingBottom: theme.spacing.unit,
+        width: "20%",
+    },
 });
 
 class AudioPost extends Component {
@@ -58,6 +91,16 @@ class AudioPost extends Component {
     expand(e) {
         e.preventDefault();
         this.setState({isExpanded: !this.state.isExpanded});
+    }
+
+    genre(e) {
+        e.preventDefault();
+        history.push(`/g/${this.props.genre}`);
+    }
+
+    author(e) {
+        e.preventDefault();
+        history.push(`/u/${this.props.author}`);
     }
 
     render() {
@@ -80,17 +123,43 @@ class AudioPost extends Component {
                 <Button 
                     className={classes.playBtn}
                     onClick={(e) => this.expand(e)}>
-                    <PlayArrowIcon />
+                    <PlayArrowIcon className={classes.arrow}/>
                 </Button>
                 <Paper elevation={1} className={classes.postTitleBox}>
                     <Typography
                         variant="h6"
                         color="inherit"
-                        className={classes.postTitle}
+                        className={classes.postTagBody}
                     >
                     {this.props.title}
                     </Typography>
                 </Paper>
+                <ButtonBase
+                    className={classes.btnAuthorBase}
+                    onClick={(e) => this.author(e)}>
+                    <Paper elevation={1} className={classes.postAuthorBox}>
+                        <Typography
+                            variant="h6"
+                            color="inherit"
+                            className={classes.postTagBody}
+                        >
+                        {this.props.author}
+                        </Typography>
+                    </Paper>
+                </ButtonBase>
+                <ButtonBase
+                    className={classes.btnGenreBase}
+                    onClick={(e) => this.genre(e)}>
+                    <Paper elevation={1} className={classes.postGenreBox}>
+                            <Typography
+                                variant="h6"
+                                color="inherit"
+                                className={classes.postTagBody}
+                            >
+                            {this.props.genre}
+                            </Typography>
+                    </Paper>
+                </ButtonBase>
             </div>
             {player} 
         </div>

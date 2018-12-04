@@ -9,7 +9,7 @@ def verify_music(music, music_stream):
     try:
         ext = music.filename.rsplit(".", 1)[1].lower() == "mp3"
     except IndexError:
-        return false
+        return False
     return ext and mime
 
 def write_file(stream, filename):

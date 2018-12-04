@@ -47,12 +47,26 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 class ResultPage extends Component {
     componentDidMount() {
-       this.props.get('', '', this.props.match.params.genre, '50');
+        let genre = this.props.match.params.genre || '' ;
+        if (genre.toLowerCase() === 'all') {
+            genre = '';
+        }
+
+        let user = this.props.match.params.user || '' ;
+        let title = this.props.match.params.search || '' ;
+        this.props.get(user, title, genre, '50');
     }
 
-    
-
     render() {
+        let title = '';
+        if (this.props.match.params.genre) {
+            title = `Genre: ${this.props.match.params.genre}`
+        } else if (this.props.match.params.user) {
+            title = `User: ${this.props.match.params.user}`
+        } else if (this.props.match.params.search) {
+            title = `Search: ${this.props.match.params.search}`
+        }
+
         let allPosts = null;
         if (this.props.posts) {
             allPosts = <div>
@@ -68,7 +82,6 @@ class ResultPage extends Component {
         }
 
         const { classes } = this.props;
-        console.log(this.props.posts);
         return (
         <div>
             <Header />
@@ -78,7 +91,7 @@ class ResultPage extends Component {
                     color="inherit"
                     className={classes.title}
                 >
-                {this.props.match.params.genre}
+                {title}
                 </Typography>
                 {allPosts}
             </Paper>

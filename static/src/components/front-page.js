@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { history } from "../store/configureStore";
 
 import { withStyles } from '@material-ui/core/styles';
 import InputBase from "@material-ui/core/InputBase";
@@ -53,6 +54,27 @@ const styles = theme => ({
 }); 
 
 class FrontPage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            search: "",
+        };
+    }
+
+    search(e) {
+        history.push(`/s/${this.state.search}`);
+    }
+
+    home(e) {
+        history.push("/g/all");
+    }
+
+    update(e, field) {
+        const nextState = {};
+        nextState[field] = e.target.value;
+        this.setState(nextState);
+    }
+
     render() {
         const { classes } = this.props;
 
@@ -67,14 +89,23 @@ class FrontPage extends Component {
                     <InputBase
                         color="inherit"
                         placeholder="Search for music (or enter nothing to see all posts)..."
+                        onChange={(e) => this.update(e, "search")}
                         className={classes.input}
                     />
                 </div>
                 <div className={classes.buttonDiv}>
-                    <Button variant="contained" color="primary" className={classes.button}>
+                    <Button 
+                        variant="contained" 
+                        color="primary" 
+                        onClick={(e) => this.search(e)}
+                        className={classes.button}>
                         Search
                     </Button>
-                    <Button variant="contained" color="primary" className={classes.button}>
+                    <Button 
+                        variant="contained" 
+                        color="primary" 
+                        onClick={(e) => this.home(e)}
+                        className={classes.button}>
                         Show Home Page
                     </Button>
                 </div>

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { history } from "../../store/configureStore";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
@@ -7,18 +8,23 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from "@material-ui/core/AppBar";
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import Toolbar from '@material-ui/core/Toolbar';
 
 import * as actionCreators from "../../actions/authentication";
 
-const styles = {
+const styles = theme => ({
     root: {
         flexGrow: 1,
     },
     grow: {
         flexGrow: 1,
     },
-}
+    btnBase: {
+        borderRadius: theme.shape.borderRadius,
+        padding: theme.spacing.unit,
+    },
+});
 
 function mapStateToProps(state) {
     return {
@@ -38,6 +44,21 @@ class Header extends Component {
         e.preventDefault();
         this.props.logout(token);
     }
+    
+    post(e) {
+        e.preventDefault();
+        history.push('/post');
+    }
+
+    userPage(e) {
+        e.preventDefault();
+        history.push(`/u/${this.props.username}`);
+    }
+
+    main(e) {
+        e.preventDefault();
+        history.push('/');
+    }
 
     render() {
         const { classes } = this.props;
@@ -46,7 +67,13 @@ class Header extends Component {
         if (this.props.isAuthenticated && this.props.username) {
             rightNav =
                 <div>
-                    <Button color="inherit">{this.props.username} User Page</Button>
+                    <Button 
+                        color="inherit"
+                        onClick={(e) => this.userPage(e)} 
+                    >
+                        {this.props.username} User Page
+                    </Button>
+                    <Button color="inherit" onClick={(e) => this.post(e)}>Post</Button>
                     <Button color="inherit" onClick={(e) => this.logout(e, this.props.token)}>Logout</Button>
                 </div>
         } else {
@@ -62,13 +89,19 @@ class Header extends Component {
         <header className = {classes.root}>
             <AppBar position="static">
             <Toolbar>
-                <Typography
-                    variant="h6"
-                    color="inherit"
-                    className = {classes.grow}
-                >
-                Group 7 Project
-                </Typography>
+                <div className={classes.grow}>
+                    <ButtonBase 
+                        className={classes.btnBase}
+                        onClick={(e) => this.main(e)}>
+                        <Typography
+                            variant="h6"
+                            color="inherit"
+                            className={classes.grow}
+                        >
+                        Mixolydian
+                        </Typography>
+                    </ButtonBase>
+                </div>
                 {rightNav}
             </Toolbar>
             </AppBar>

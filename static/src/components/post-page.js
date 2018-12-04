@@ -111,7 +111,6 @@ const genres = [
     'Country',
     'Rock',
     'Jazz',
-    'Metal',
     'Pop',
     'Electronic',
 ]
@@ -127,6 +126,14 @@ class PostPage extends Component {
             file: null,
             isFilled: false,
         };
+    }
+
+    _handleKeyPress(e) {
+        if (e.key === 'Enter' && this.state.isFilled) {
+            this.props.post(this.props.token, 
+                            this.state.title, 
+                            genres[this.state.listIndex], this.state.file);
+        }
     }
 
     clickList(e) {
@@ -189,7 +196,7 @@ class PostPage extends Component {
         const { classes } = this.props;
 
         return (
-        <div>
+        <div onKeyPress={(e) => this._handleKeyPress(e)}>
             <Header /> 
             <Paper elevation={1} className={classes.body}>
                 <Typography

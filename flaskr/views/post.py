@@ -10,21 +10,25 @@ from .admin import admin
 def upload():
     db = get_db()
     identity = get_jwt_identity()
+    genres = ("Blues", "Classical", "Country", "Rock", "Jazz", "Pop", "Electronic")
     error = None
     if form_exists(request.form, 'title'):
         title = request.form['title']
     else:
         error = "Missing title"
     if form_exists(request.form, 'genre') and error is None:
-        genre = request.form['genre']
-    else:
+        if request.form['genre'] in genres:
+            genre = request.form['genre']
+        else:
+            error = "Invalid genre"
+    elif error is None:
         error = "Missing genre"
     if form_exists(request.files, 'music') and error is None:
         music = request.files['music']
         music_stream = music.read()
         filename = sha256(music_stream).hexdigest()
         error = check_music_integrity(music, music_stream, filename)
-    else:
+    elif error is None:
         error = "Missing mp3 file upload"
 
     if error is None:

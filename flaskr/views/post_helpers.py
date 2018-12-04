@@ -9,7 +9,7 @@ def verify_music(music, music_stream):
     try:
         ext = music.filename.rsplit(".", 1)[1].lower() == "mp3"
     except IndexError:
-        return false
+        return False
     return ext and mime
 
 def write_file(stream, filename):
@@ -25,20 +25,20 @@ def get_posts_query(forms):
     params = []
 
     if form_exists(forms, 'title'):
-        params.append("%" + forms['title'] + "%")
+        params.append("%" + forms['title'].lower() + "%")
         query += ' WHERE title LIKE ?'
     if form_exists(forms, 'author'):
-        params.append(forms['author'])
+        params.append(forms['author'].lower())
         if form_exists(forms, 'title'):
-            query += ' AND author_uname = ?'
+            query += ' AND author_uname LIKE ? '
         else:
-            query += ' WHERE author_uname = ?'
+            query += ' WHERE author_uname LIKE ?'
     if form_exists(forms, 'genre'):
-        params.append(forms['genre'])
+        params.append(forms['genre'].lower())
         if form_exists(forms, 'title') or form_exists(forms, 'author'):
-            query += ' AND genre = ?'
+            query += ' AND genre LIKE ?'
         else:
-            query += ' WHERE genre = ?'
+            query += ' WHERE genre LIKE?'
     if form_exists(forms, 'limit'):
         try:
             int(forms['limit'])

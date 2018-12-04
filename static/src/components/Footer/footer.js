@@ -31,6 +31,14 @@ class Footer extends Component {
                 >
                 Created by Andrew Quach and Stan Lyakhov for CS 290
                 </Typography>
+                <Button color="inherit" href="/g/all">All</Button>
+                <Button color="inherit" href="/g/blues">Blues</Button>
+                <Button color="inherit" href="/g/classical">Classical</Button>
+                <Button color="inherit" href="/g/country">Country</Button>
+                <Button color="inherit" href="/g/rock">Rock</Button>
+                <Button color="inherit" href="/g/jazz">Jazz</Button>
+                <Button color="inherit" href="/g/pop">Pop</Button>
+                <Button color="inherit" href="/g/electronic">Electronic</Button>
             </Toolbar>
             </AppBar>
         </header>

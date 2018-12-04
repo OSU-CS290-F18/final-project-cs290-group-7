@@ -47,14 +47,20 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 class ResultPage extends Component {
     componentDidUpdate(prevProps) {
-        let genre = this.props.match.params.genre || '' ;
-        if (genre.toLowerCase() === 'all') {
-            genre = '';
-        }
+        if (this.props.match.params.genre !== prevProps.match.params.genre ||
+            this.props.match.params.user !== prevProps.match.params.user ||
+            this.props.match.params.search !== prevProps.match.params.search) {
 
-        let user = this.props.match.params.user || '' ;
-        let title = this.props.match.params.search || '' ;
-        this.props.get(user, title, genre, '50');
+            let genre = this.props.match.params.genre || '';
+            let user = this.props.match.params.user || '';
+            let title = this.props.match.params.search || '';
+
+            if (genre.toLowerCase() === 'all') {
+                genre = '';
+            }
+
+            this.props.get(user, title, genre, '50');
+        }
     }
 
     render() {

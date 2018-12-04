@@ -15,8 +15,8 @@ const styles = theme => ({
     body: {
         marginTop: theme.spacing.unit * 2,
         marginBottom: theme.spacing.unit * 2,
-        paddingTop: "30vh",
-        paddingBottom: "30vh",
+        paddingTop: "12vh",
+        paddingBottom: "12vh",
         backgroundColor: fade(theme.palette.common.black, 0.80),
     },
     search: {
@@ -50,6 +50,14 @@ const styles = theme => ({
         display: "inline-block",
         margin: theme.spacing.unit,
         width: "20%",
+    },
+    img: {
+        display: "block",
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginTop: theme.spacing.unit*2,
+        marginBottom: theme.spacing.unit*4,
+        borderRadius: theme.shape.borderRadius,
     }
 }); 
 
@@ -82,6 +90,7 @@ class FrontPage extends Component {
         <div>
             <Header /> 
             <Paper elevation={1} className={classes.body}>
+                <img className={classes.img} src="/logo.png" />
                 <div className={classes.search}>
                     <div className={classes.iconDiv}>
                         <SearchIcon className={classes.icon}/>

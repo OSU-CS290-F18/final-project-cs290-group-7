@@ -39,8 +39,9 @@ export function post(token, title, genre, music) {
             .catch((error) => {
                 if (error.response) {
                     dispatch(postFailure(error.response.data));
-                } else if (!error.message === 'Network Error') {
-                    dispatch(postFailure({error: 'Could not connect to API. Please log in.'}));
+                } else if (error.message) {
+                    dispatch(postFailure({error: "Please log on."}));
+                    history.push('/login');
                 }
             });
     };

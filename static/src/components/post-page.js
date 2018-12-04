@@ -88,7 +88,11 @@ const styles = theme => ({
     },
     fileInput: {
         display: "none",
-    }
+    },
+    error: {
+        color: "red",
+        textAlign: "center",
+    },
 });
 
 function mapStateToProps(state) {
@@ -155,8 +159,10 @@ class PostPage extends Component {
 
     isFilled() {
         let valid = false;
-
-        if (this.state.title === "" || !this.state.title) {
+        
+        if (!this.props.token) {
+            this.setState({error: "Please log on."});
+        } else if (this.state.title === "" || !this.state.title) {
             this.setState({error: "Please enter a title."});
         } else if (this.state.title.length > 100) {
             this.setState({error: "Title is too long (100 char max)."});
@@ -284,6 +290,13 @@ class PostPage extends Component {
                         Submit
                     </Button>
                 </div>
+                <Typography
+                    variant="h6"
+                    color="inherit"
+                    className={classes.error}
+                >
+                {this.state.error}
+                </Typography>
             </Paper>
             <Footer />
         </div>

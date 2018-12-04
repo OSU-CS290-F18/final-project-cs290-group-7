@@ -15,6 +15,6 @@ New functionality and features will be implemented gradually
 - [x] Music upload
 - [x] Music player
 - [x] Posts filtering by genre and title
-- [ ] Individual user page
+- [x] Individual user page
 - [ ] Comment section for each post
 - [ ] Post "favorite" system

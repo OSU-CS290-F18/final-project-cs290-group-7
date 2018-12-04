@@ -82,7 +82,6 @@ class ResultPage extends Component {
         }
 
         const { classes } = this.props;
-        console.log(this.props.posts);
         return (
         <div>
             <Header />

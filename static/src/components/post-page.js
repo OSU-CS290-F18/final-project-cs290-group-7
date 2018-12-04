@@ -111,7 +111,6 @@ const genres = [
     'Country',
     'Rock',
     'Jazz',
-    'Metal',
     'Pop',
     'Electronic',
 ]

@@ -48,7 +48,7 @@ def get_posts_query(forms):
     else:
         limit = "20"
     params.append(limit)
-    query += ' LIMIT ?'
+    query += ' ORDER BY id DESC LIMIT ?'
     return query, tuple(params)
 
 def form_exists(forms, keyword):

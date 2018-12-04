@@ -260,7 +260,7 @@ class PostPage extends Component {
                         className={classes.fileInput}
                         id="upload-button"
                         type="file"
-                        enctype="multipart/form-data"
+                        encType="multipart/form-data"
                         onChange={(e) => this.uploadFile(e.target.files[0])}
                     />
                     <label htmlFor="upload-button">

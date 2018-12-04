@@ -33,12 +33,15 @@ export function post(token, title, genre, music) {
         return postAPI(token, title, genre, music)
             .then(json => json.data)   
             .then((response) => {
+                console.log(response);
                 dispatch(postSuccess());
                 history.push('/');
             })
             .catch((error) => {
                 if (error.response) {
                     dispatch(postFailure(error.response.data));
+                } else if (!error.message === 'Network Error') {
+                    dispatch(postFailure({error: 'Could not connect to API. Please log in.'}));
                 }
             });
     };

@@ -14,3 +14,7 @@ def index(filename=None):
 @admin.route('/logo.png', methods=('GET',))
 def logo():
     return admin.send_static_file('logo.png')
+
+@admin.route('/favicon.ico', methods=('GET',))
+def icon():
+    return admin.send_static_file('favicon.ico')

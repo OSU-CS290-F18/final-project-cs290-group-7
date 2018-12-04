@@ -31,6 +31,9 @@ const styles = theme => ({
             background: theme.palette.primary.main,
         }
     },
+    arrow: {
+        color: "white",
+    },
     postTitleBox: {
         margin: theme.spacing.unit,
         color: "black",
@@ -40,6 +43,7 @@ const styles = theme => ({
     postAuthorBox: {
         background: theme.palette.primary.main,
         margin: theme.spacing.unit,
+        color: "white",
         width: "100%",
         height: "100%",
         display: "flex",
@@ -47,6 +51,7 @@ const styles = theme => ({
     postGenreBox: {
         background: theme.palette.primary.main,
         margin: theme.spacing.unit,
+        color: "white",
         width: "100%",
         height: "100%",
         display: "flex",
@@ -65,7 +70,7 @@ const styles = theme => ({
         borderRadius: theme.shape.borderRadius,
         paddingTop: theme.spacing.unit,
         paddingBottom: theme.spacing.unit,
-        width: "10%",
+        width: "20%",
     },
     btnAuthorBase: {
         borderRadius: theme.shape.borderRadius,
@@ -118,7 +123,7 @@ class AudioPost extends Component {
                 <Button 
                     className={classes.playBtn}
                     onClick={(e) => this.expand(e)}>
-                    <PlayArrowIcon />
+                    <PlayArrowIcon className={classes.arrow}/>
                 </Button>
                 <Paper elevation={1} className={classes.postTitleBox}>
                     <Typography

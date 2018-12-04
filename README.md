@@ -1,4 +1,4 @@
-![Mixolydian](assets/logo.png?raw=true)
+![Mixolydian](static/logo.png?raw=true)
 
 **Version** 1.0
 

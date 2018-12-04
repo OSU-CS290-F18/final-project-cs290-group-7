@@ -10,3 +10,7 @@ def script(filename):
 @admin.route('/<path:filename>', methods=('GET',))
 def index(filename=None):
     return admin.send_static_file('index.html')
+
+@admin.route('/logo.png', methods=('GET',))
+def logo():
+    return admin.send_static_file('logo.png')
